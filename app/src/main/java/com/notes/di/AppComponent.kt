@@ -11,9 +11,11 @@ import javax.inject.Singleton
 @Component(
     modules = [
         AppModule::class,
+        ViewModelModule::class
     ]
 )
 interface AppComponent {
+    fun viewModelsFactory(): ViewModelFactory
 
     @Component.Factory
     interface Factory {
@@ -33,6 +35,7 @@ interface AppComponent {
 )
 class AppModule {
 
+    @Singleton
     @Provides
     fun provideNoteDatabase(
         context: Context

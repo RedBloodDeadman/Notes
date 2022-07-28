@@ -1,10 +1,12 @@
 package com.notes.ui.list
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.notes.data.NoteDatabase
+import com.notes.data.NoteDbo
+import com.notes.domain.NoteListItem
+import com.notes.utils.SingleLiveEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -12,35 +14,27 @@ import javax.inject.Inject
 class NoteListViewModel @Inject constructor(
     private val noteDatabase: NoteDatabase
 ) : ViewModel() {
-
-    private val _notes = MutableLiveData<List<NoteListItem>?>()
-    val notes: LiveData<List<NoteListItem>?> = _notes
-
-    private val _navigateToNoteCreation = MutableLiveData<Unit?>()
+    private val _navigateToNoteCreation = SingleLiveEvent<Unit?>()
     val navigateToNoteCreation: LiveData<Unit?> = _navigateToNoteCreation
 
     init {
-        viewModelScope.launch(Dispatchers.IO) {
-            _notes.postValue(
-                noteDatabase.noteDao().getAll().map {
-                    NoteListItem(
-                        id = it.id,
-                        title = it.title,
-                        content = it.content,
-                    )
-                }
-            )
-        }
+    }
+
+    val notesListLiveData: LiveData<List<NoteDbo>> by lazy {
+        noteDatabase.noteDao().getAll()
     }
 
     fun onCreateNoteClick() {
         _navigateToNoteCreation.postValue(Unit)
     }
 
-}
+    fun onDeleteClick(item: NoteListItem) {
+        viewModelScope.launch(Dispatchers.IO) {
+            noteDatabase.noteDao().deleteItem(item.id)
+        }
+    }
 
-data class NoteListItem(
-    val id: Long,
-    val title: String,
-    val content: String,
-)
+    override fun onCleared() {
+        super.onCleared()
+    }
+}

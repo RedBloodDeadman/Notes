@@ -18,4 +18,8 @@ data class NoteDbo(
     val createdAt: LocalDateTime,
     @ColumnInfo(name = "modifiedAt")
     val modifiedAt: LocalDateTime,
-)
+){
+    override fun toString(): String {
+        return "NoteDbo(id=$id, title='$title', content='$content', createdAt=$createdAt, modifiedAt=$modifiedAt)"
+    }
+}

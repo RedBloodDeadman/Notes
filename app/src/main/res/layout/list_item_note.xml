@@ -1,30 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp"
-    >
+    android:orientation="horizontal"
+    android:padding="16dp">
 
-    <TextView
-        android:id="@+id/titleLabel"
+    <LinearLayout
+        android:id="@+id/contentLayout"
+        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="@android:style/TextAppearance.Material.Title"
-        tools:text="Title"
-        />
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/contentLabel"
+        <TextView
+            android:id="@+id/titleLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@android:style/TextAppearance.Material.Title"
+            tools:text="Title" />
+
+        <TextView
+            android:id="@+id/contentLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textAppearance="@android:style/TextAppearance.Material.Body1"
+            tools:text="Content" />
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/buttonDelete"
+        android:layout_weight="2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:ellipsize="end"
-        android:maxLines="2"
-        android:textAppearance="@android:style/TextAppearance.Material.Body1"
-        tools:text="Content"
-        />
+        android:layout_height="50dp"
+        android:backgroundTint="#AF0B0B"
+        android:text="Delete" />
 
 </LinearLayout>
